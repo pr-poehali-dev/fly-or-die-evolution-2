@@ -1,17 +1,26 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from "react";
+import MainMenu from "@/components/MainMenu";
+import GameScreen from "@/components/GameScreen";
+import ProfilePage from "@/components/ProfilePage";
+import ShopPage from "@/components/ShopPage";
+import GuidePage from "@/components/GuidePage";
+import CoopMissions from "@/components/CoopMissions";
 
-const Index = () => {
+export type Screen = "menu" | "game" | "profile" | "shop" | "guide" | "coop";
+
+export default function Index() {
+  const [screen, setScreen] = useState<Screen>("menu");
+
+  const navigate = (s: Screen) => setScreen(s);
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4 color-black text-black">Добро пожаловать!</h1>
-        <p className="text-xl text-gray-600">тут будет отображаться ваш проект</p>
-      </div>
-      <span className="absolute bottom-8 left-1/2 -translate-x-1/2 inline-block bg-[#FF6637] text-white text-sm px-4 py-2 rounded-full whitespace-nowrap">
-        Подождите 5 минут, Юра создает первую версию проекта с нуля
-      </span>
+    <div className="min-h-screen bg-background overflow-hidden">
+      {screen === "menu" && <MainMenu onNavigate={navigate} />}
+      {screen === "game" && <GameScreen onNavigate={navigate} />}
+      {screen === "profile" && <ProfilePage onNavigate={navigate} />}
+      {screen === "shop" && <ShopPage onNavigate={navigate} />}
+      {screen === "guide" && <GuidePage onNavigate={navigate} />}
+      {screen === "coop" && <CoopMissions onNavigate={navigate} />}
     </div>
   );
-};
-
-export default Index;
+}
